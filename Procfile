@@ -1,1 +1,1 @@
-web: gunicorn TimeApi.wsgi --log-file-
+web: gunicorn Time.wsgi --log-file -

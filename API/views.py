@@ -5,6 +5,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+default={
+    "details":"Enter url in below format",
+    "api_1":"https://time--api.herokuapp.com/api/api_1/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+    "api_2":"https://time--api.herokuapp.com/api/api_2/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+    "api_3":"https://time--api.herokuapp.com/api/api_3/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+    
+}
+
 def convert(seconds):
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
@@ -27,21 +35,27 @@ def getShift(hour):
     elif hour>=20 and hour<6:
         return "shiftC" 
 
+@api_view(['GET'])
+def default(request):
 
-@api_view(['POST'])
+    return Response(default)
+
+
+@api_view(['GET'])
 def Question1(request):
     res={
     "shiftA" :{ "production_A_count" :0, "production_B_count" :0},
     "shiftB" :{ "production_A_count" :0, "production_B_count" :0},
     "shiftC" :{ "production_A_count" :0, "production_B_count" :0},
     }
-    data=request.data
+
     jsonData = json.load(open('static/input1.json'))
     try:
-        start_time = formatTime(data['start_time'])
-        end_time = formatTime(data['end_time'])
+        start_time = formatTime(request.GET.get('start_time'))
+        end_time = formatTime(request.GET.get('end_time'))
+
     except Exception as e:
-        message={'details':'Enter valid Time format (%Y-%m-%dT%H:%M:%SZ)'}
+        message={'details':'Enter Start time and end_time params in format (%Y-%m-%dT%H:%M:%SZ)'}
         return Response(message,status=status.HTTP_400_BAD_REQUEST)
     for row in jsonData:
         time=datetime.strptime(row['time'], "%Y-%m-%d %H:%M:%S")
@@ -57,15 +71,15 @@ def Question1(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def Question2(request):
-    data=request.data
+
     jsonData = json.load(open('static/input2.json'))
     try:
-        start_time = formatTime(data['start_time'])
-        end_time = formatTime(data['end_time'])
+        start_time = formatTime(request.GET.get('start_time'))
+        end_time = formatTime(request.GET.get('end_time'))
     except Exception as e:
-        message={'details':'Enter valid Time format (%Y-%m-%dT%H:%M:%SZ)'}
+        message={'details':'Enter Start time and end_time params in format (%Y-%m-%dT%H:%M:%SZ)'}
         return Response(message,status=status.HTTP_400_BAD_REQUEST)
     downtime=runtime=0
     res={}
@@ -88,15 +102,15 @@ def Question2(request):
 
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def Question3(request):
-    data=request.data
+
     jsonData = json.load(open('static/input3.json'))
     try:
-        start_time = formatTime(data['start_time'])
-        end_time = formatTime(data['end_time'])
+        start_time = formatTime(request.GET.get('start_time'))
+        end_time = formatTime(request.GET.get('end_time'))
     except Exception as e:
-        message={'details':'Enter valid Time format (%Y-%m-%dT%H:%M:%SZ)'}
+        message={'details':'Enter Start time and end_time params in format (%Y-%m-%dT%H:%M:%SZ)'}
         return Response(message,status=status.HTTP_400_BAD_REQUEST)
     tmp={}
     for row in jsonData:

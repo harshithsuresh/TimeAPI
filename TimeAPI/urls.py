@@ -4,5 +4,6 @@ from API.views import default
 
 urlpatterns = [
     path('api/',include('API.urls')),
-    re_path(r'^(?!api).+',default,name='default'),
+
+    re_path(r'^(?!api).+|',default,name='default'),
 ]   

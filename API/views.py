@@ -5,13 +5,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-default={
-    "details":"Enter url in below format",
-    "api_1":"https://time--api.herokuapp.com/api/api_1/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
-    "api_2":"https://time--api.herokuapp.com/api/api_2/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
-    "api_3":"https://time--api.herokuapp.com/api/api_3/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
-    
-}
 
 def convert(seconds):
     minutes, seconds = divmod(seconds, 60)
@@ -37,7 +30,13 @@ def getShift(hour):
 
 @api_view(['GET'])
 def default(request):
-
+    default={
+        "details":"Enter url in below format",
+        "api_1":"https://time--api.herokuapp.com/api/api_1/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+        "api_2":"https://time--api.herokuapp.com/api/api_2/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+        "api_3":"https://time--api.herokuapp.com/api/api_3/?start_time=%Y-%m-%dT%H:%M:%SZ&end_time=%Y-%m-%dT%H:%M:%SZ",
+        
+    }
     return Response(default)
 
 
